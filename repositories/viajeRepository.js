@@ -5,13 +5,20 @@ exports.findAllTravels = async () => {
 };
 
 exports.searchTravel = async (filtro) => {
-  console.log(filtro);
   const { tipoDeViajeId, nombre, destino } = filtro;
-  const where = {
-    tipoDeViajeId: tipoDeViajeId ? tipoDeViajeId : { [Op.like]: `%` },
-    nombre: nombre ? { [Op.like]: `%${nombre}%` } : { [Op.like]: `%` },
-    destino: destino ? { [Op.like]: `%${destino}%` } : { [Op.like]: `%` },
-  };
+
+  const where = {};
+
+  if (tipoDeViajeId) {
+    where.tipoDeViajeId = tipoDeViajeId;
+  }
+  if (nombre) {
+    where.nombre = { [Op.like]: `%${nombre}%` };
+  }
+  if (destino) {
+    where.destino = { [Op.like]: `%${destino}%` };
+  }
+
   return await Viaje.findAll({ where });
 };
 

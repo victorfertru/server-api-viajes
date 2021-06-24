@@ -15,6 +15,8 @@ router.get(
   "/search:tipoDeViajeId?:nombre?:destino?",
   async (req, res, next) => {
     try {
+      const { tipoDeViajeId, nombre, destino } = req.query;
+      console.log(tipoDeViajeId, nombre, destino);
       const viajes = await viajeService.search(req.query);
       res.status(200).json(viajes);
     } catch (error) {
