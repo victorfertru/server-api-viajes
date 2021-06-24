@@ -1,6 +1,7 @@
 const dbConnection = require("../config/db");
 const Viaje = require("./Viaje");
 const TipoDeViaje = require("./TipoDeViaje");
+const User = require("../models/User");
 
 const loadModels = () => {
   TipoDeViaje.hasMany(Viaje, {
