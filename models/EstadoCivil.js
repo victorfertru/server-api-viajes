@@ -1,22 +1,22 @@
 const { DataTypes } = require("sequelize");
 const dbConnection = require("../config/db");
 
-const TipoDeViaje = dbConnection.define(
-  "tipoDeViaje",
+const EstadoCivil = dbConnection.define(
+  "estadoCivil",
   {
     id: {
       primaryKey: true,
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.TINYINT,
       autoIncrement: true,
     },
-    valor: {
+    descripcion: {
       type: DataTypes.STRING,
     },
   },
   {
-    tableName: "tiposDeViajes",
+    tableName: "estadosCiviles",
   }
 );
 
-module.exports = TipoDeViaje;
+module.exports = EstadoCivil;

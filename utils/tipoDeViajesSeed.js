@@ -29,5 +29,5 @@ const tiposDeViaje = [
 ];
 
 TipoDeViaje.bulkCreate(tiposDeViaje).then(() =>
-  console.log("Tipos de viaje creados!")
+  console.log("¡Tipos de viaje creados!")
 );

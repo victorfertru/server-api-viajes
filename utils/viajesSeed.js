@@ -71,4 +71,4 @@ const viajes = [
   },
 ];
 
-Viaje.bulkCreate(viajes).then(() => console.log("Viajes creados!✈"));
+Viaje.bulkCreate(viajes).then(() => console.log("¡Viajes creados!✈"));

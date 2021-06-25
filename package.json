@@ -7,6 +7,8 @@
     "start:dev": "nodemon ./bin/www",
     "seed:viajes": "node ./utils/viajesSeed.js",
     "seed:users": "node ./utils/userSeed.js",
+    "seed:clientes": "node ./utils/clienteSeed.js",
+    "seed:estadosCiviles": "node ./utils/estadoCivilSeed.js",
     "seed:tiposDeViajes": "node ./utils/tipoDeViajesSeed.js"
   },
   "dependencies": {
