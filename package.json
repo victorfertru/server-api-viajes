@@ -5,11 +5,11 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
-    "seed:viajes": "node ./utils/viajesSeed.js",
-    "seed:users": "node ./utils/userSeed.js",
-    "seed:clientes": "node ./utils/clienteSeed.js",
-    "seed:estadosCiviles": "node ./utils/estadoCivilSeed.js",
-    "seed:tiposDeViajes": "node ./utils/tipoDeViajesSeed.js"
+    "seed:1": "node ./utils/tipoDeViajesSeed.js",
+    "seed:2": "node ./utils/viajesSeed.js",
+    "seed:3": "node ./utils/userSeed.js",
+    "seed:4": "node ./utils/estadoCivilSeed.js",
+    "seed:5": "node ./utils/clienteSeed.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

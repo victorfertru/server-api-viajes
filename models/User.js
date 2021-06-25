@@ -13,6 +13,7 @@ const User = dbConnection.define(
     },
     email: {
       type: DataTypes.STRING(35),
+      unique: true,
     },
     password: {
       type: DataTypes.STRING(64),

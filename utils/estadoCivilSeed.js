@@ -14,10 +14,10 @@ const estadosCiviles = [
   {
     descripcion: "Viudo",
   },
-  {
-    id: 99,
-    descripcion: "",
-  },
+  // {
+  //   id: 0,
+  //   descripcion: "",
+  // },
 ];
 
 EstadoCivil.bulkCreate(estadosCiviles).then(() =>

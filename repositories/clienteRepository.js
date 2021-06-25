@@ -22,3 +22,20 @@ exports.findAllClientes = async () => {
   //     { type: dbConnection.QueryTypes.SELECT }
   //   );
 };
+
+exports.findClienteById = async (id) => {
+  return await Cliente.findByPk(id);
+};
+
+exports.insertCliente = async (cliente) => {
+  console.log(cliente);
+  return await Cliente.create(cliente);
+};
+
+exports.updateCliente = async (id, clienteDetails) => {
+  return await Cliente.update(clienteDetails, { where: { id } });
+};
+
+exports.deleteCliente = async (id) => {
+  return await Cliente.destroy({ where: { id } });
+};

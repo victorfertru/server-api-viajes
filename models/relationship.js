@@ -1,6 +1,6 @@
 const dbConnection = require("../config/db");
-const Viaje = require("./Viaje");
 const TipoDeViaje = require("./TipoDeViaje");
+const Viaje = require("./Viaje");
 const User = require("../models/User");
 const EstadoCivil = require("./EstadoCivil");
 const Cliente = require("./Cliente");
@@ -14,11 +14,13 @@ const loadModels = () => {
 
   EstadoCivil.hasMany(Cliente, {
     sourceKey: "id",
-    foreignKey: { name: "estadoCivilId", allowNull: false },
+    foreignKey: { name: "estadoCivilId", allowNull: true },
   });
   Cliente.belongsTo(EstadoCivil);
 
-  dbConnection.sync({}).then(() => console.log("Everything is fine! 🔥"));
+  dbConnection.sync({}).then(() => {
+    console.log("Everything is fine! 🔥");
+  });
 };
 
 module.exports = loadModels;

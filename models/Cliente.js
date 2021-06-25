@@ -16,6 +16,7 @@ const Cliente = dbConnection.define("Cliente", {
   },
   email: {
     type: DataTypes.STRING(50),
+    unique: true,
   },
   direccion: {
     type: DataTypes.STRING(70),
