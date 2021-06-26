@@ -9,6 +9,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const viajesRouter = require("./routes/viajes");
 const clientesRouter = require("./routes/clients");
+const estadosCivilesRouter = require("./routes/estadosCiviles");
 const tiposDeViajeRouter = require("./routes/tiposDeViajes");
 const loadModels = require("./models/relationship");
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/", indexRouter);
+app.use("/clientes/estadosCiviles", estadosCivilesRouter);
 app.use("/clientes", clientesRouter);
 app.use("/users", usersRouter);
 app.use("/viajes/tiposDeViaje", tiposDeViajeRouter);

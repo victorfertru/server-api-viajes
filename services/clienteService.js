@@ -19,7 +19,6 @@ exports.createCliente = async (cliente) => {
   if (!cliente) throw new Error("You must provide `cliente`");
   if (cliente.estadoCivilId === "") {
     delete cliente.estadoCivilId;
-    // todo revisar
   }
   delete cliente.id;
 

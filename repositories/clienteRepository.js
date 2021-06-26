@@ -28,7 +28,6 @@ exports.findClienteById = async (id) => {
 };
 
 exports.insertCliente = async (cliente) => {
-  console.log(cliente);
   return await Cliente.create(cliente);
 };
 

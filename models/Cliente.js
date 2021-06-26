@@ -10,19 +10,24 @@ const Cliente = dbConnection.define("Cliente", {
   },
   nombre: {
     type: DataTypes.STRING(35),
+    allowNull: false,
   },
   apellidos: {
     type: DataTypes.STRING(50),
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING(50),
     unique: true,
+    allowNull: false,
   },
   direccion: {
     type: DataTypes.STRING(70),
+    allowNull: false,
   },
   dni: {
     type: DataTypes.STRING(10),
+    allowNull: false,
   },
   telefono: {
     type: DataTypes.STRING(20),
