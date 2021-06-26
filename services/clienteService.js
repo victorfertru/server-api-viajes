@@ -1,4 +1,6 @@
 const clienteRepository = require("../repositories/clienteRepository");
+const { ERRORS } = require("../utils/constants");
+const HttpError = require("../utils/httpError");
 
 exports.getAllClientes = async () => {
   return await clienteRepository.findAllClientes();
@@ -6,17 +8,17 @@ exports.getAllClientes = async () => {
 
 exports.getClienteById = async (id) => {
   if (!id) {
-    throw new Error("You must provide ID");
+    throw new HttpError(400, ERRORS.NONE_ID);
   }
   const cliente = await clienteRepository.findClienteById(id);
 
-  if (!cliente) throw new Error("No existe ningún cliente con la id " + id);
+  if (!cliente) throw new HttpError(400, ERRORS.CUSTOMER_NOT_EXIST + id);
 
   return cliente.toJSON();
 };
 
 exports.createCliente = async (cliente) => {
-  if (!cliente) throw new Error("You must provide `cliente`");
+  if (!cliente) throw new HttpError(400, ERRORS.NO_CUSTOMER);
   if (cliente.estadoCivilId === "") {
     delete cliente.estadoCivilId;
   }
@@ -26,18 +28,18 @@ exports.createCliente = async (cliente) => {
 };
 
 exports.editCliente = async (id, clienteDetails) => {
-  if (!id) throw new Error();
+  if (!id) throw new HttpError(400, ERRORS.NONE_ID);
   const cliente = await clienteRepository.findClienteById(id);
 
-  if (!cliente) throw new Error("No existe ningún cliente con la id " + id);
+  if (!cliente) throw new HttpError(400, ERRORS.CUSTOMER_NOT_EXIST + id);
 
   await clienteRepository.updateCliente(id, clienteDetails);
 };
 
 exports.removeCliente = async (id) => {
-  if (!id) throw new Error("ID must be provided");
+  if (!id) throw new HttpError(400, ERRORS.NONE_ID);
   const cliente = await clienteRepository.findClienteById(id);
-  if (!cliente) throw new Error("No existe ningún cliente con la id " + id);
+  if (!cliente) throw new HttpError(400, ERRORS.CUSTOMER_NOT_EXIST + id);
 
   await clienteRepository.deleteCliente(id);
 };

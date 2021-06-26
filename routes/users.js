@@ -7,7 +7,7 @@ router.post("/signup", async (req, res, next) => {
     await userService.signup(req.body);
     res.sendStatus(201);
   } catch (error) {
-    res.status(400).json({ message: error });
+    next(error);
   }
 });
 
@@ -17,16 +17,16 @@ router.post("/login", async (req, res, next) => {
     const user = await userService.login(email, password);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (_, res, next) => {
   try {
     const users = await userService.getAllUsers();
     res.status(200).json(users);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -36,7 +36,7 @@ router.get("/search:name?", async (req, res, next) => {
     const user = await userService.searchUserByName(name);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 

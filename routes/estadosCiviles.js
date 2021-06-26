@@ -8,7 +8,7 @@ router.get("/", async (_, res, next) => {
     const estados = await estadoCivilService.getAll();
     res.status(200).json(estados);
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    next(error);
   }
 });
 
@@ -18,20 +18,20 @@ router.get("/:id", async (req, res, next) => {
     const estado = await estadoCivilService.getById(id);
     res.status(200).json(estado);
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    next(error);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
     const estado = await estadoCivilService.create(req.body);
     res.status(200).json(estado);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     await estadoCivilService.edit(id, req.body);
@@ -39,7 +39,7 @@ router.put("/:id", async (req, res) => {
 
     res.status(200).json(estado);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -47,9 +47,9 @@ router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     await estadoCivilService.remove(id);
-    res.status(200).json({ deleted: true });
+    res.sendStatus(204);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 

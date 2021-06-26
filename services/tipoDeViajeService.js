@@ -1,4 +1,6 @@
 const tipoDeViajeRepository = require("../repositories/tipoDeViajeRepository");
+const { ERRORS } = require("../utils/constants");
+const HttpError = require("../utils/httpError");
 
 exports.getAllTiposDeViajes = async () => {
   return await tipoDeViajeRepository.findAllTiposDeViajes();
@@ -6,31 +8,31 @@ exports.getAllTiposDeViajes = async () => {
 
 exports.getTipoDeViajeById = async (id) => {
   if (!id) {
-    throw new Error("You must provide ID");
+    throw new HttpError(400, ERRORS.NONE_ID);
   }
   const tipo = await tipoDeViajeRepository.findTipoDeViajeById(id);
-  if (!tipo) throw new Error("No existe ningún tipo de viaje con la id " + id);
+  if (!tipo) throw new HttpError(400, ERRORS.TT_NOT_EXIST + id);
   return tipo.toJSON();
 };
 
 exports.createTipo = async (tipo) => {
-  if (!tipo) throw new Error("You must provide `tipo de viaje`");
+  if (!tipo) throw new HttpError(400, ERRORS.NO_TRIPTYPE);
   return await tipoDeViajeRepository.insertTipoDeViaje(tipo);
 };
 
 exports.editTipoDeViaje = async (id, tipoDetails) => {
-  if (!id) throw new Error();
+  if (!id) throw new HttpError(400, ERRORS.NONE_ID);
   const tipo = await tipoDeViajeRepository.findTipoDeViajeById(id);
 
-  if (!tipo) throw new Error("No existe ningún tipo de viaje con la id " + id);
+  if (!tipo) throw new HttpError(400, ERRORS.TT_NOT_EXIST + id);
 
   await tipoDeViajeRepository.updateTipoDeViaje(id, tipoDetails);
 };
 
 exports.removeTipo = async (id) => {
-  if (!id) throw new Error("ID must be provided");
+  if (!id) throw new HttpError(400, ERRORS.NONE_ID);
   const tipo = await tipoDeViajeRepository.findTipoDeViajeById(id);
-  if (!tipo) throw new Error("No existe ningún tipo de viaje con la id " + id);
+  if (!tipo) throw new HttpError(400, ERRORS.TT_NOT_EXIST + id);
 
   await tipoDeViajeRepository.deleteTipoDeViaje(id);
 };

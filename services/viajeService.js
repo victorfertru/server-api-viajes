@@ -1,22 +1,24 @@
 const Viaje = require("../models/Viaje");
 const viajeRepository = require("../repositories/viajeRepository");
+const { ERRORS } = require("../utils/constants");
+const HttpError = require("../utils/httpError");
 
 exports.getAllTravels = async () => {
   return await viajeRepository.findAllTravels();
 };
 exports.getTravelById = async (id) => {
   if (!id) {
-    throw new Error("You must provide ID");
+    throw new HttpError(400, ERRORS.NONE_ID);
   }
   const viaje = await viajeRepository.findTravelById(id);
 
-  if (!viaje) throw new Error("No existe ningún viaje con la id " + id);
+  if (!viaje) throw new HttpError(400, ERRORS.TRAVEL_NOT_EXIST + id);
 
   return viaje.toJSON();
 };
 
 exports.createTravel = async (viaje) => {
-  if (!viaje) throw new Error("You must provide `travel`");
+  if (!viaje) throw new HttpError(400, ERRORS.NO_TRAVEL);
 
   delete viaje.id;
   if (viaje.estado === "") {
@@ -38,16 +40,16 @@ exports.editTravel = async (id, travelDetails) => {
   if (!id) throw new Error();
   const viaje = await viajeRepository.findTravelById(id);
 
-  if (!viaje) throw new Error("No existe ningún viaje con la id " + id);
+  if (!viaje) throw new HttpError(400, ERRORS.TRAVEL_NOT_EXIST + id);
 
   viaje.TipoDeViajeId = travelDetails.tipoDeViajeId;
   await viajeRepository.updateTravel(id, travelDetails);
 };
 
 exports.removeTravel = async (id) => {
-  if (!id) throw new Error("ID must be provided");
+  if (!id) throw new HttpError(400, ERRORS.NONE_ID);
   const viaje = await viajeRepository.findTravelById(id);
-  if (!viaje) throw new Error("No existe ningún viaje con la id " + id);
+  if (!viaje) throw new HttpError(400, ERRORS.TRAVEL_NOT_EXIST + id);
 
   await viajeRepository.deleteTravel(id);
 };

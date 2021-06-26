@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const clienteService = require("../services/clienteService");
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (_, res, next) => {
   try {
     const clientes = await clienteService.getAllClientes();
     res.status(200).json(clientes);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -17,20 +17,20 @@ router.get("/:id", async (req, res, next) => {
     const cliente = await clienteService.getClienteById(id);
     res.status(200).json(cliente);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
     const cliente = await clienteService.createCliente(req.body);
     res.status(200).json(cliente);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     await clienteService.editCliente(id, req.body);
@@ -38,7 +38,7 @@ router.put("/:id", async (req, res) => {
 
     res.status(200).json(cliente);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -47,10 +47,8 @@ router.delete("/:id", async (req, res, next) => {
     const { id } = req.params;
     await clienteService.removeCliente(id);
     res.sendStatus(204);
-    // res.status(200).json({ deleted: true });
   } catch (error) {
-    res.status(404).json({ message: error.message });
-    // res.status(200).json({ deleted: false });
+    next(error);
   }
 });
 
