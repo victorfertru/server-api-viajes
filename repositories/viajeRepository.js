@@ -1,7 +1,20 @@
 const { Op } = require("sequelize");
+const TipoDeViaje = require("../models/TipoDeViaje");
 const Viaje = require("../models/Viaje");
+
 exports.findAllTravels = async () => {
-  return await Viaje.findAll({ order: [["createdAt", "ASC"]] });
+  return await Viaje.findAll(
+    {
+      order: [["createdAt", "ASC"]],
+      include: {
+        model: TipoDeViaje,
+        attributes: [["valor", "tipoDeViajeDesc"]],
+      },
+    },
+    {
+      raw: true,
+    }
+  );
 };
 
 exports.searchTravel = async (filtro) => {
