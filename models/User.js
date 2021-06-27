@@ -14,16 +14,20 @@ const User = dbConnection.define(
     email: {
       type: DataTypes.STRING(35),
       unique: true,
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING(64),
+      allowNull: false,
     },
     role: {
       type: DataTypes.STRING(10),
       defaultValue: ROLE.USER,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(35),
+      allowNull: false,
     },
   },
   {

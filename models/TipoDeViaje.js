@@ -12,6 +12,7 @@ const TipoDeViaje = dbConnection.define(
     },
     valor: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {

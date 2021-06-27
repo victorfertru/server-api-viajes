@@ -12,6 +12,7 @@ const EstadoCivil = dbConnection.define(
     },
     descripcion: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {

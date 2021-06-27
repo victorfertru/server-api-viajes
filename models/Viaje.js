@@ -10,15 +10,19 @@ const Viaje = dbConnection.define("Viaje", {
   },
   nombre: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   destino: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   duracion: {
     type: DataTypes.INTEGER,
+    allowNull: false,
   },
   plazas: {
     type: DataTypes.INTEGER,
+    allowNull: false,
   },
   precio: {
     type: DataTypes.DECIMAL(8, 2),
@@ -38,7 +42,6 @@ const Viaje = dbConnection.define("Viaje", {
   },
   tipoDeViajeId: {
     type: DataTypes.INTEGER,
-    // defaultValue: 0,
   },
 });
 

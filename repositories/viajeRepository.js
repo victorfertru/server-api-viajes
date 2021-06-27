@@ -32,7 +32,13 @@ exports.searchTravel = async (filtro) => {
     where.destino = { [Op.like]: `%${destino}%` };
   }
 
-  return await Viaje.findAll({ where });
+  return await Viaje.findAll({
+    where,
+    include: {
+      model: TipoDeViaje,
+      attributes: [["valor", "tipoDeViajeDesc"]],
+    },
+  });
 };
 
 exports.findTravelById = async (id) => {
