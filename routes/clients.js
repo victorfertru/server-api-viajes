@@ -1,8 +1,9 @@
 const express = require("express");
+const { IsTokenValid } = require("../middlewares/roleValidation");
 const router = express.Router();
 const clienteService = require("../services/clienteService");
 
-router.get("/", async (_, res, next) => {
+router.get("/", IsTokenValid(), async (_, res, next) => {
   try {
     const clientes = await clienteService.getAllClientes();
     res.status(200).json(clientes);

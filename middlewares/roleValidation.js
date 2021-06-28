@@ -1,7 +1,7 @@
 const { ROLE } = require("../utils/constants");
 const HttpError = require("../utils/httpError");
 
-const roleValidation = (role) => {
+exports.roleValidation = (role) => {
   let roles = "";
   if (role) {
     roles = Array.isArray(role) ? role : [role];
@@ -12,4 +12,11 @@ const roleValidation = (role) => {
     next();
   };
 };
-module.exports = roleValidation;
+
+exports.IsTokenValid = () => {
+  return (req, res, next) => {
+    if (!req.tokenValid) throw new HttpError(401);
+
+    next();
+  };
+};

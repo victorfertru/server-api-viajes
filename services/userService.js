@@ -17,11 +17,11 @@ exports.login = async (email, password) => {
 
   const user = await userRepository.findUserWithPasswordByEmail(email);
 
-  if (!user) throw new HttpError(400, ERRORS.USER_NOT_FOUND);
+  if (!user) throw new HttpError(404, ERRORS.USER_NOT_FOUND);
 
   const encryptedPassword = await encryptPassword(password);
   if (user.password !== encryptedPassword)
-    throw new HttpError(404, ERRORS.WRONG_PASSWORD);
+    throw new HttpError(401, ERRORS.WRONG_PASSWORD);
 
   const token = signToken({
     id: user.id,
@@ -30,7 +30,7 @@ exports.login = async (email, password) => {
     name: user.name,
   });
 
-  return token;
+  return { ...user.dataValues, bearer: token };
 };
 
 exports.getAllUsers = async () => {
