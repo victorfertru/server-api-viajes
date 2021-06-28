@@ -19,9 +19,9 @@ exports.IsTokenValid = () => {
       if (!req.tokenValid) throw new HttpError(401);
       next();
     };
-  } else {
-    return (req, res, next) => {
-      next();
-    };
   }
+
+  return (req, res, next) => {
+    next();
+  };
 };

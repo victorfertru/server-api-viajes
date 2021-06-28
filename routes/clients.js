@@ -1,5 +1,5 @@
 const express = require("express");
-const { IsTokenValid } = require("../middlewares/roleValidation");
+const { IsTokenValid } = require("../middlewares/accessValidation");
 const router = express.Router();
 const clienteService = require("../services/clienteService");
 
