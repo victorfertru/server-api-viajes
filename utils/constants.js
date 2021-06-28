@@ -19,4 +19,4 @@ exports.ERRORS = Object.freeze({
 });
 
 // On/Off for @middleware IsTokenValid();
-exports.SECURITY_ENABLE = false;
+exports.SECURITY_ENABLE = true;
