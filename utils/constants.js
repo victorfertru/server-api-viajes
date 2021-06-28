@@ -17,3 +17,6 @@ exports.ERRORS = Object.freeze({
   TRAVEL_NOT_EXIST: "None travel exists with id ",
   NO_TRAVEL: "You must provide a travel",
 });
+
+// On/Off for @middleware IsTokenValid();
+exports.SECURITY_ENABLE = true;

@@ -1,4 +1,4 @@
-const { ROLE } = require("../utils/constants");
+const { ROLE, SECURITY_ENABLE } = require("../utils/constants");
 const HttpError = require("../utils/httpError");
 
 exports.roleValidation = (role) => {
@@ -14,9 +14,14 @@ exports.roleValidation = (role) => {
 };
 
 exports.IsTokenValid = () => {
-  return (req, res, next) => {
-    if (!req.tokenValid) throw new HttpError(401);
-
-    next();
-  };
+  if (SECURITY_ENABLE) {
+    return (req, res, next) => {
+      if (!req.tokenValid) throw new HttpError(401);
+      next();
+    };
+  } else {
+    return (req, res, next) => {
+      next();
+    };
+  }
 };
