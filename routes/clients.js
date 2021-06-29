@@ -3,6 +3,24 @@ const { IsTokenValid } = require("../middlewares/accessValidation");
 const router = express.Router();
 const clienteService = require("../services/clienteService");
 
+router.get(":pageSize?:page?:sort?", IsTokenValid(), async (req, res, next) => {
+  try {
+    const clientes = await clienteService.getAllClientes(req.query);
+    res.status(200).json(clientes);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// router.get("/", IsTokenValid(), async (_, res, next) => {
+//   try {
+//     const clientes = await clienteService.getAllClientes();
+//     res.status(200).json(clientes);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 router.get("/", IsTokenValid(), async (_, res, next) => {
   try {
     const clientes = await clienteService.getAllClientes();

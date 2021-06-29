@@ -3,24 +3,48 @@ const { QueryTypes } = require("sequelize");
 const Cliente = require("../models/Cliente");
 
 const EstadoCivil = require("../models/EstadoCivil");
-exports.findAllClientes = async () => {
-  return await Cliente.findAll(
-    {
-      attributes: ["id", "nombre", "dni", "telefono"],
-      include: {
-        model: EstadoCivil,
-        attributes: [["descripcion", "estadoCivilDesc"]],
-      },
-    },
-    {
-      raw: true,
-    }
-  );
+// exports.findAllClientes = async () => {
+//   return await Cliente.findAll(
+//     {
+//       attributes: ["id", "nombre", "dni", "telefono"],
+//       include: {
+//         model: EstadoCivil,
+//         attributes: [["descripcion", "estadoCivilDesc"]],
+//       },
+//     },
+//     {
+//       raw: true,
+//     }
+//   );
+// };
 
-  //   return await dbConnection.query(
-  //     "SELECT clientes.id, nombre,dni, telefono, descripcion as estadoCivilDesc from `clientes` inner join `estadosciviles` on clientes.estadoCivilId = estadosciviles.id",
-  //     { type: dbConnection.QueryTypes.SELECT }
-  //   );
+exports.findAllClientes = async ({ pageSize, page, sort }) => {
+  const offset = pageSize * (page - 1);
+  const limit = pageSize;
+
+  let orderBy = "ASC";
+  let sortBy = "createdAt";
+  const order = [];
+  if (sort) {
+    sortBy = sort;
+    if (sort.includes("-")) {
+      orderBy = "DESC";
+      sortBy = sort.replace("-", "");
+    }
+  }
+
+  order.push([sortBy, orderBy]);
+
+  return await Cliente.findAndCountAll({
+    limit,
+    offset,
+    order,
+    attributes: ["id", "nombre", "dni", "telefono"],
+    include: {
+      model: EstadoCivil,
+      attributes: [["descripcion", "estadoCivilDesc"]],
+    },
+  });
 };
 
 exports.findClienteById = async (id) => {

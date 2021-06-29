@@ -3,9 +3,20 @@ const viajeRepository = require("../repositories/viajeRepository");
 const { ERRORS } = require("../utils/constants");
 const HttpError = require("../utils/httpError");
 
-exports.getAllTravels = async () => {
-  return await viajeRepository.findAllTravels();
+// exports.getAllTravels = async () => {
+//   return await viajeRepository.findAllTravels();
+// };
+
+exports.getAllTravels = async (pagination) => {
+  const { pageSize = 10, page = 1, sort } = pagination;
+
+  return await viajeRepository.findAllTravels({
+    pageSize: +pageSize,
+    page: +page,
+    sort,
+  });
 };
+
 exports.getTravelById = async (id) => {
   if (!id) {
     throw new HttpError(400, ERRORS.NONE_ID);

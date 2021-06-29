@@ -2,8 +2,18 @@ const clienteRepository = require("../repositories/clienteRepository");
 const { ERRORS } = require("../utils/constants");
 const HttpError = require("../utils/httpError");
 
-exports.getAllClientes = async () => {
-  return await clienteRepository.findAllClientes();
+// exports.getAllClientes = async () => {
+//   return await clienteRepository.findAllClientes();
+// };
+
+exports.getAllClientes = async (pagination) => {
+  const { pageSize = 10, page = 1, sort } = pagination;
+
+  return await clienteRepository.findAllClientes({
+    pageSize: +pageSize,
+    page: +page,
+    sort,
+  });
 };
 
 exports.getClienteById = async (id) => {

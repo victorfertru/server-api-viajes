@@ -3,22 +3,28 @@ const { IsTokenValid } = require("../middlewares/accessValidation");
 const router = express.Router();
 const viajeService = require("../services/viajeService");
 
-router.get("/", IsTokenValid(), async (_, res, next) => {
+router.get(":pageSize?:page?:sort?", IsTokenValid(), async (req, res, next) => {
   try {
-    const viajes = await viajeService.getAllTravels();
-    res.status(200).json(viajes);
+    const pagination = await viajeService.getAllTravels(req.query);
+    res.status(200).json(pagination);
   } catch (error) {
     next(error);
   }
 });
+// router.get("/", IsTokenValid(), async (_, res, next) => {
+//   try {
+//     const viajes = await viajeService.getAllTravels();
+//     res.status(200).json(viajes);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 router.get(
   "/search:tipoDeViajeId?:nombre?:destino?",
-  IsTokenValid(),
+
   async (req, res, next) => {
     try {
-      const { tipoDeViajeId, nombre, destino } = req.query;
-      console.log(tipoDeViajeId, nombre, destino);
       const viajes = await viajeService.search(req.query);
       res.status(200).json(viajes);
     } catch (error) {
