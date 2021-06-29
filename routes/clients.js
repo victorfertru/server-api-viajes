@@ -12,7 +12,7 @@ router.get("/", IsTokenValid(), async (_, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     const cliente = await clienteService.getClienteById(id);
@@ -22,7 +22,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", IsTokenValid(), async (req, res, next) => {
   try {
     const cliente = await clienteService.createCliente(req.body);
     res.status(200).json(cliente);
@@ -31,7 +31,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     await clienteService.editCliente(id, req.body);
@@ -43,7 +43,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     await clienteService.removeCliente(id);

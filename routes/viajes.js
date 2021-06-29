@@ -1,8 +1,9 @@
 const express = require("express");
+const { IsTokenValid } = require("../middlewares/accessValidation");
 const router = express.Router();
 const viajeService = require("../services/viajeService");
 
-router.get("/", async (_, res, next) => {
+router.get("/", IsTokenValid(), async (_, res, next) => {
   try {
     const viajes = await viajeService.getAllTravels();
     res.status(200).json(viajes);
@@ -13,6 +14,7 @@ router.get("/", async (_, res, next) => {
 
 router.get(
   "/search:tipoDeViajeId?:nombre?:destino?",
+  IsTokenValid(),
   async (req, res, next) => {
     try {
       const { tipoDeViajeId, nombre, destino } = req.query;
@@ -24,7 +26,7 @@ router.get(
     }
   }
 );
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     const viaje = await viajeService.getTravelById(id);
@@ -34,7 +36,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", IsTokenValid(), async (req, res, next) => {
   try {
     const viaje = await viajeService.createTravel(req.body);
     res.status(200).json(viaje);
@@ -43,7 +45,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     await viajeService.editTravel(id, req.body);
@@ -55,7 +57,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     await viajeService.removeTravel(id);

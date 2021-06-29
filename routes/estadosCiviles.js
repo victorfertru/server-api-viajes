@@ -1,9 +1,10 @@
 const express = require("express");
+const { IsTokenValid } = require("../middlewares/accessValidation");
 const router = express.Router();
 
 const estadoCivilService = require("../services/estadoCivilService");
 
-router.get("/", async (_, res, next) => {
+router.get("/", IsTokenValid(), async (_, res, next) => {
   try {
     const estados = await estadoCivilService.getAll();
     res.status(200).json(estados);
@@ -12,7 +13,7 @@ router.get("/", async (_, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     const estado = await estadoCivilService.getById(id);
@@ -22,7 +23,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", IsTokenValid(), async (req, res, next) => {
   try {
     const estado = await estadoCivilService.create(req.body);
     res.status(200).json(estado);
@@ -31,7 +32,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     await estadoCivilService.edit(id, req.body);
@@ -43,7 +44,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", IsTokenValid(), async (req, res, next) => {
   try {
     const { id } = req.params;
     await estadoCivilService.remove(id);

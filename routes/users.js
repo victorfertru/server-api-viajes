@@ -1,4 +1,5 @@
 const express = require("express");
+const { IsTokenValid } = require("../middlewares/accessValidation");
 const router = express.Router();
 const userService = require("../services/userService");
 
@@ -21,7 +22,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/", async (_, res, next) => {
+router.get("/", IsTokenValid(), async (_, res, next) => {
   try {
     const users = await userService.getAllUsers();
     res.status(200).json(users);
@@ -30,7 +31,7 @@ router.get("/", async (_, res, next) => {
   }
 });
 
-router.get("/search:name?", async (req, res, next) => {
+router.get("/search:name?", IsTokenValid(), async (req, res, next) => {
   try {
     const { name } = req.query;
     const user = await userService.searchUserByName(name);
