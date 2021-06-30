@@ -2,49 +2,6 @@ const { Op } = require("sequelize");
 const TipoDeViaje = require("../models/TipoDeViaje");
 const Viaje = require("../models/Viaje");
 
-// exports.findAllTravels = async () => {
-//   return await Viaje.findAll(
-//     {
-//       order: [["createdAt", "ASC"]],
-//       include: {
-//         model: TipoDeViaje,
-//         attributes: [["valor", "tipoDeViajeDesc"]],
-//       },
-//     },
-//     {
-//       raw: true,
-//     }
-//   );
-// };
-
-exports.findAllTravels = async ({ pageSize, page, sort }) => {
-  const offset = pageSize * (page - 1);
-  const limit = pageSize;
-
-  let orderBy = "ASC";
-  let sortBy = "createdAt";
-  const order = [];
-  if (sort) {
-    sortBy = sort;
-    if (sort.includes("-")) {
-      orderBy = "DESC";
-      sortBy = sort.replace("-", "");
-    }
-  }
-
-  order.push([sortBy, orderBy]);
-
-  return await Viaje.findAndCountAll({
-    limit,
-    offset,
-    order,
-    include: {
-      model: TipoDeViaje,
-      attributes: [["valor", "tipoDeViajeDesc"]],
-    },
-  });
-};
-
 exports.searchTravel = async (filtro) => {
   const where = {};
   let orderBy = "ASC";
